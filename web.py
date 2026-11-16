@@ -53,7 +53,7 @@ class Web:
         @self.app.get("/login")
         async def auth(request: Request, token: str | None = None):
             t = await self.tokens.get(token)
-            if not self.tokens.validate(t) or not t:
+            if not t or not self.tokens.validate(t):
                 raise HTTPException(status_code=403)
 
             request.session["uid"] = t.user.id

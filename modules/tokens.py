@@ -57,6 +57,8 @@ class Tokens:
         ]
 
     def validate(self, token: Token) -> bool:
+        if token is not Token:
+            return False
         return token.active and \
             (datetime.now(timezone.utc).timestamp() - token.made_at <= self.expire_time)
 

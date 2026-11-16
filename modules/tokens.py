@@ -1,18 +1,18 @@
 
 import secrets, string
 from datetime import datetime, timezone, timedelta
+from dataclasses import dataclass
 
 from database.modules.tokens import TokensDatabase
 from modules.users import Users, User
 
+
+@dataclass
 class Token:
-    def __init__(
-        self, user: User, token: str, active: bool, made_at: int
-    ):
-        self.user = user
-        self.token = token
-        self.active = active
-        self.made_at = made_at
+    user: User
+    token: str
+    active: bool
+    made_at: int
 
 class Tokens:
     def __init__(
@@ -56,7 +56,7 @@ class Tokens:
             for t in await self.database.get_all()
         ]
 
-    async def validate(self, token: Token) -> bool:
+    def validate(self, token: Token) -> bool:
         return token.active and \
             (datetime.now(timezone.utc).timestamp() - token.made_at <= self.expire_time)
 
@@ -68,7 +68,3 @@ class Tokens:
             secrets.choice(string.ascii_letters + string.digits) for _ in range(s)
         )
         return token.upper() if self.upper else token
-
-if __name__ == "__main__":
-    tokens = Tokens()
-    print(tokens.generate())

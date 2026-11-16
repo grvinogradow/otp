@@ -14,9 +14,7 @@ class TokensDatabase:
     async def setup(self):
         await self.database.setup( self.table, **self.keys )
 
-    async def add(
-        self, token: str, user: str
-    ):
+    async def add(self, token: str, user: str):
         await self.database.insert(
             self.table, token, user = user, active = True
         )

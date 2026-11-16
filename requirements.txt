@@ -1,0 +1,6 @@
+aiosqlite
+fastapi
+uvicorn
+itsdangerous
+dotenv
+starlette==1.7.0

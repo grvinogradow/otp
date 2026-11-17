@@ -1,5 +1,5 @@
 
-import os, asyncio
+import os, asyncio, argparse
 
 from web import Web
 from modules.tokens import Tokens
@@ -31,9 +31,7 @@ class Main:
             ssl = False,  debug = self.debug
         )
 
-    async def start(
-        self, host: str = '0.0.0.0', port: int = 8000
-    ) -> None:
+    async def start( self, host: str, port: int ) -> None:
         # Database Init
         await self.database.initialize()
         await self.database.TokensDatabase.setup()
@@ -57,6 +55,17 @@ if __name__ == "__main__":
     if not os.path.exists('.env'):
         raise ValueError(".env is not found")
 
-    main = Main(secret=os.getenv('SECRET'), debug=True)
-    asyncio.run(main.start())
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--host", type=str, default="127.0.0.1")
+    parser.add_argument("--port", type=int, default=8000)
+    parser.add_argument("--debug", action="store_true")
+
+    args = parser.parse_args()
+
+    main = Main(
+        secret=os.getenv('SECRET'),
+        debug=args.debug
+    )
+    asyncio.run(main.start(args.host, args.port))
 

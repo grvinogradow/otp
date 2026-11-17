@@ -53,7 +53,7 @@ class Web:
         @self.app.get("/login")
         async def auth(request: Request, token: str | None = None):
             t = await self.tokens.get(token)
-            if not t or not self.tokens.validate(t):
+            if not t or not self.tokens.validate(t) or not t.user:
                 raise HTTPException(status_code=403)
 
             if not await self.tokens.consume(t):

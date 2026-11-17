@@ -66,8 +66,10 @@ class Tokens:
         if not self.validate(token):
             return False
 
-        token.active = False
-        return await self.database.consume(token.token)
+        consume = await self.database.consume(token.token)
+        if not consume:
+            token.active = False
+        return consume
 
     def generate(self, s: int = 12) -> str:
         token = ''.join(

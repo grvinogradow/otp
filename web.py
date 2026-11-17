@@ -56,9 +56,11 @@ class Web:
             if not t or not self.tokens.validate(t):
                 raise HTTPException(status_code=403)
 
+            if not await self.tokens.consume(t):
+                raise HTTPException(status_code=403)
+
             request.session["uid"] = t.user.id
 
-            await self.tokens.deactivate(t)
             return RedirectResponse("/", status_code=303)
 
         @self.app.get("/logout")

@@ -31,5 +31,12 @@ class TokensDatabase:
             parameter = parameter, value = value
         )
 
+    async def consume(self, token: str) -> bool:
+        return await self.database.update_if(
+            table = self.table,  id = token,
+            parameter = "active", value = False,
+            condition = "active", expected = True
+        )
+
     async def get_all(self) -> list:
         return await self.database.get_all( table = self.table )

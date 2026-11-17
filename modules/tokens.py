@@ -57,13 +57,17 @@ class Tokens:
         ]
 
     def validate(self, token: Token) -> bool:
-        if token is not Token:
+        if not isinstance(token, Token):
             return False
         return token.active and \
             (datetime.now(timezone.utc).timestamp() - token.made_at <= self.expire_time)
 
-    async def deactivate(self, token: Token) -> None:
-        await self.database.update(token.token, "active", False)
+    async def consume(self, token: Token) -> bool:
+        if not self.validate(token):
+            return False
+
+        token.active = False
+        return await self.database.consume(token.token)
 
     def generate(self, s: int = 12) -> str:
         token = ''.join(

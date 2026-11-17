@@ -84,6 +84,18 @@ class SQLite:
         except Exception as e:
             raise DatabaseError(e)
 
+    async def update_if(
+        self,
+        table: str, id: str, parameter: str,
+        value, condition: str, expected
+    ) -> bool:
+        cursor = await self.conn.execute(
+            f"UPDATE {table} SET {parameter} = ? WHERE id = ? AND {condition} = ?",
+            (value, id, expected)
+        )
+        await self.conn.commit()
+        return cursor.rowcount == 1
+
     async def get_all(
         self, table: str, param: str = None, value: str = None
     ) -> list:

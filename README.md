@@ -2,6 +2,14 @@
 # OTP
 ### An one-time token authentication system designed for integration into Python applications.
 
+<p align="left">
+    <img src="https://img.shields.io/badge/Python-3.14-blue">
+    <img src="https://img.shields.io/badge/tests-pytest-blue?logo=pytest">
+    <a href="https://github.com/grvinogradow/otp/actions/workflows/tests.yml">
+    <img src="https://github.com/grvinogradow/otp/actions/workflows/tests.yml/badge.svg">
+  </a>
+</p>
+
 ## Features
 
 - Modular architecture
@@ -70,6 +78,11 @@ otp/
 │       └── tokens.py
 └── requirements.txt
 ```
+
+## Develop
+
+You should install the requirements from ```requirements-dev.txt```.
+This project uses ```pytest``` testing lib.
 
 ## License
 

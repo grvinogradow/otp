@@ -6,8 +6,8 @@
     <img src="https://img.shields.io/badge/Python-3.14-blue">
     <img src="https://img.shields.io/badge/tests-pytest-blue?logo=pytest">
     <a href="https://github.com/grvinogradow/otp/actions/workflows/tests.yml">
-    <img src="https://github.com/grvinogradow/otp/actions/workflows/tests.yml/badge.svg">
-  </a>
+        <img src="https://github.com/grvinogradow/otp/actions/workflows/tests.yml/badge.svg?branch=main">
+    </a>
 </p>
 
 ## Features
